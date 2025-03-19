@@ -4,75 +4,46 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Date;
 
+@Getter
 @Entity
 public class UserEntity {
 
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String fistName;
+    @Setter
+    private String firstName;
 
+    @Setter
     private String lastName;
 
+    @Setter
+    @Email
     private String email;
 
     private String password;
 
+    @Setter
     private Date creationDate;
 
     public UserEntity() {
-        //do nothing
-    }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(8);
+        this.password = encoder.encode(password);
+        this.creationDate = new Date();
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFistName() {
-        return fistName;
-    }
-
-    public void setFistName(String fistName) {
-        this.fistName = fistName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(8);
+        this.password = encoder.encode(password);
     }
 }
