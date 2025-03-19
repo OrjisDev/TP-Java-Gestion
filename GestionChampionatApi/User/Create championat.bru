@@ -1,0 +1,22 @@
+meta {
+  name: Create championat
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/championship/create
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nom": "WCT #1",
+    "startDate":"2025-02-01",
+    "endDate":"2026-02-01",
+    "wonPoint":1,
+    "lostPoint":5,
+    "drawPoint":3
+  }
+}

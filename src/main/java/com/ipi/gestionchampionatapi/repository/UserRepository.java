@@ -1,6 +1,6 @@
 package com.ipi.gestionchampionatapi.repository;
 
-import com.ipi.gestionchampionatapi.entites.ChampionshipEntity;
+import com.ipi.gestionchampionatapi.entites.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ChampionshipRepository extends CrudRepository<ChampionshipEntity, Integer> {
+public interface UserRepository extends CrudRepository<UserEntity, Integer> {
 
     @Override
-    List<ChampionshipEntity> findAll();
+    List<UserEntity> findAll();
+
+    Optional<UserEntity> findByEmail(String email);
 }

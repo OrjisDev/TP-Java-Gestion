@@ -1,0 +1,22 @@
+meta {
+  name: Update championat
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:8080/championship/update/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nom": "WCT #1",
+    "startDate":"2024-02-01",
+    "endDate":"2026-02-01",
+    "wonPoint":1,
+    "lostPoint":5,
+    "drawPoint":3
+  }
+}
