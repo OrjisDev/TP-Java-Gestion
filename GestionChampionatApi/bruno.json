@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "GestionChampionatApi",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
