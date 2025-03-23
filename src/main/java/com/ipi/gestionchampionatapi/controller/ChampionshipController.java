@@ -2,6 +2,7 @@ package com.ipi.gestionchampionatapi.controller;
 
 import com.ipi.gestionchampionatapi.entites.ChampionshipEntity;
 import com.ipi.gestionchampionatapi.repository.ChampionshipRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class ChampionshipController {
     }
 
     @PostMapping("/create")
-    public ChampionshipEntity createChampionship(@RequestBody ChampionshipEntity entity) {
+    public ChampionshipEntity createChampionship(@Valid @RequestBody ChampionshipEntity entity) {
         if(entity == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Mauvaise requête");
         }

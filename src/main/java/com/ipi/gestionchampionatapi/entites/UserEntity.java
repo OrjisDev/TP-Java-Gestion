@@ -30,7 +30,7 @@ public class UserEntity {
     @Email
     private String email;
 
-    private String password;
+    private String password = "";
 
     @Setter
     private Date creationDate;

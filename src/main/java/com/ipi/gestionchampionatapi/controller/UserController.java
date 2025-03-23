@@ -55,5 +55,30 @@ public class UserController {
         }
     }
 
+    @PostMapping("/update/{id}")
+    public UserEntity updateUser(@PathVariable(name = "id", required = true) int id, @Valid @RequestBody UserEntity user) {
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Utilisateur vide");
+        }
+        Optional<UserEntity> userEntity = userRepository.findById(id);
+        if (userEntity.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id n'existe pas");
+        }
+        else{
+            user.setId(userEntity.get().getId());
+            user.setPassword(user.getPassword());
+            return userRepository.save(user);
+        }
+    }
+
+    @PostMapping("/delete/{id}")
+    public UserEntity deleteUser(@PathVariable(name = "id", required = true) int id) {
+        Optional<UserEntity> userEntity = userRepository.findById(id);
+        if (userEntity.isPresent()) {
+            userRepository.delete(userEntity.get());
+            return userEntity.get();
+        }
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id n'existe pas");
+    }
 
 }

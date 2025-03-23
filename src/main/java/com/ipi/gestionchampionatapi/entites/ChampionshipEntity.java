@@ -1,8 +1,11 @@
 package com.ipi.gestionchampionatapi.entites;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "championship")
@@ -23,6 +26,18 @@ public class ChampionshipEntity {
     private int lostPoint;
 
     private int drawPoint;
+
+    @Getter
+    @Setter
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
+    private List<TeamEntity> team;
+
 
     public ChampionshipEntity() {
         //do nothing
