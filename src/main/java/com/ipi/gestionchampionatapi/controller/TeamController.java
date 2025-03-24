@@ -1,6 +1,8 @@
 package com.ipi.gestionchampionatapi.controller;
 
+import com.ipi.gestionchampionatapi.entites.ChampionshipEntity;
 import com.ipi.gestionchampionatapi.entites.TeamEntity;
+import com.ipi.gestionchampionatapi.repository.ChampionshipRepository;
 import com.ipi.gestionchampionatapi.repository.TeamRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class TeamController {
     @Autowired
     public TeamRepository repository;
 
+    @Autowired
+    public ChampionshipRepository championshipRepository;
+
     @GetMapping("/getall")
     public List<TeamEntity> getAllTeams(){return repository.findAll();}
 
@@ -28,6 +33,27 @@ public class TeamController {
             return team.get();
         }
         else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found");
+    }
+
+    @GetMapping("/getbychampionship/{id}")
+    public List<TeamEntity> getTeamsByChampionshipId(@PathVariable(name ="id", required = true) int id){
+        Optional<ChampionshipEntity> championship = championshipRepository.findById(id);
+        if(championship.isPresent()){
+            return championship.get().getTeam();
+        }
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found");
+    }
+
+    @PostMapping("/addtochampionship/{idTeam}/{idChampionShip}")
+    public ChampionshipEntity addTeamToChampionship(@PathVariable int idTeam, @PathVariable int idChampionShip){
+        Optional<ChampionshipEntity> championshipEntity = championshipRepository.findById(idChampionShip);
+        Optional<TeamEntity> teamEntity = repository.findById(idTeam);
+        if(teamEntity.isPresent() && championshipEntity.isPresent()){
+            ChampionshipEntity championship = championshipEntity.get();
+            championship.addToTeam(teamEntity.get());
+            return championshipRepository.save(championship);
+        }
+        throw new RuntimeException("Operation Denied");
     }
 
     @PostMapping("/create")

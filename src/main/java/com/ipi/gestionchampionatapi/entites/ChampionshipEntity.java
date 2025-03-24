@@ -98,4 +98,8 @@ public class ChampionshipEntity {
     public void setDrawPoint(int drawPoint) {
         this.drawPoint = drawPoint;
     }
+
+    public void addToTeam(TeamEntity team) {
+        this.team.add(team);
+    }
 }
